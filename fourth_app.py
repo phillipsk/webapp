@@ -33,3 +33,17 @@ def page_not_found(error):
 
 app.debug = True
 app.run()
+
+###
+
+
+import os
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/')
+def hello():
+    return 'Hello World! zzzzzzzzzzzzzz'
+
+###

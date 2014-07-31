@@ -1,4 +1,4 @@
-#!/home/kup/rampup/webapp/venv/bin/python
+#!/home/kup/rampup/venv/bin/python
 
 # -*- coding: utf-8 -*-
 import re

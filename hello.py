@@ -8,3 +8,6 @@ app = Flask(__name__)
 def hello():
     return 'Hello World! zzzzzzzzzzzzzz'
 
+#<div id="hi_btn"   class=btn btn-info">Say Hi</div>
+
+app.run()

@@ -54,7 +54,12 @@ class Music(flask.views.MethodView):
     def get(self):
         songs = os.listdir('static/music')
         return flask.render_template("music.html", songs=songs)
+
+class Bible(flask.views.MethodView):
     
+        pass
+
+
 app.add_url_rule('/',
                  view_func=Main.as_view('index'),
                  methods=["GET", "POST"])

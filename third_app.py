@@ -5,6 +5,7 @@ import requests
 import json
 
 def compare_number_strings(string1, string2):
+    print "Hello, world!"
     return cmp(int(string1), int(string2))
 
 

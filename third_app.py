@@ -1,6 +1,30 @@
 import flask, flask.views
 import os
 import functools
+import requests
+import json
+
+def compare_number_strings(string1, string2):
+    return cmp(int(string1), int(string2))
+
+
+def user_bible(query):
+    output = requests.get("http://getbible.net/json?passage={0}".format(query))
+    json_dict_output = json.loads(output.text.strip("();"))
+
+    before_for_loop_parse = json_dict_output[u'book'][0][u'chapter'] #[u'2'][u'verse']
+
+    keys = before_for_loop_parse.keys()
+    keys.sort(compare_number_strings)
+    print keys
+    stored_list = []
+
+    for k in keys:
+        stored_list.append(before_for_loop_parse[k][u'verse'])
+
+    return stored_list
+
+
 app = flask.Flask(__name__)
 # Don't do this!
 app.secret_key = "password"
@@ -56,10 +80,15 @@ class Music(flask.views.MethodView):
         return flask.render_template("music.html", songs=songs)
 
 class Bible(flask.views.MethodView):
+    @login_required
+    def get(self):
+        return flask.render_template('bible.html')
+    def post(self):
+        result = (flask.request.form['expression'])
+        flask.flash("\n".join(user_bible(result)))
+        return flask.redirect(flask.url_for('Bible'))
+
     
-        pass
-
-
 app.add_url_rule('/',
                  view_func=Main.as_view('index'),
                  methods=["GET", "POST"])
@@ -69,6 +98,9 @@ app.add_url_rule('/remote/',
 app.add_url_rule('/music/',
                  view_func=Music.as_view('music'),
                  methods=['GET'])
+app.add_url_rule('/Bible/',
+                 view_func=Bible.as_view('Bible'),
+                 methods=['GET', 'POST'])
 
 if __name__ == "__main__":
     app.debug = True

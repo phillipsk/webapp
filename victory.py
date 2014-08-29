@@ -60,7 +60,23 @@ for k in keys:
 #print string
 for v in stored_list:
 	print v
+"""
+def user_bible(query):
+	output = requests.get("http://getbible.net/json?passage={0}".format(query))
+	json_dict_output = json.loads(output.text.strip("();"))
 
+	before_for_loop_parse = json_dict_output[u'book'][0][u'chapter'] #[u'2'][u'verse']
+
+	keys = before_for_loop_parse.keys()
+	keys.sort()
+
+	stored_list = []
+
+	for k in keys:
+		stored_list.append(before_for_loop_parse[k][u'verse']
+
+	return stored_list
+"""
 #x = u'({"book":[{"book_name":"1 John","book_nr":"62","chapter_nr":"3","chapter":{"16":{"verse_nr":"16","verse":"Hereby perceive we the love of God, because he laid down his life for us: and we ought to lay down our lives for the brethren."},"17":{"verse_nr":17,"verse":"But whoso hath this world\'s good, and seeth his brother have need, and shutteth up his bowels of compassion from him, how dwelleth the love of God in him?"}}}],"direction":"LTR","type":"verse"});'
 #print x
 #parsing the unicode

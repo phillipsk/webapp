@@ -42,7 +42,7 @@ Acts 15:1-5, 10, 15&version=aov
 #x = [scripture.text] # method provided by requests
 #print scripture.text
 json_dict_output = json.loads(scripture.text.strip("();"))
-
+print json_dict_output
 before_for_loop_parse = json_dict_output[u'book'][0][u'chapter'] #[u'2'][u'verse']
 
 keys = before_for_loop_parse.keys()

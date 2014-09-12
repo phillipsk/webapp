@@ -21,8 +21,8 @@
                     {% for chapter in books[book]%}
                       <div class="chapter">
                       Chapter: {{chapter}}
-                    {% with sorted_keys() = books[book][chapter].keys() %}
-                    {% sorted_keys.sort() %}
+                    {% with sorted_keys = books[book][chapter].keys() %}
+                    
                     {% for verse in sorted_keys %}
                         <div class="verse">
                         Verse: {{verse}}

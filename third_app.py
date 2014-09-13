@@ -5,6 +5,36 @@ import requests
 import json
 import pprint
 
+"""
+def parse_rough_draft(json_dict_output):
+    books = json_dict_output[u'book']
+    result_dict={}
+    for i in books:
+        book_name_variable = i[u'book_name']
+        current_book_value = result_dict.setdefault(book_name_variable, {})
+        chapter_variable = i[u'chapter_nr']
+        chapter_value = current_book_value.setdefault(chapter_variable, {})
+        all_chapter_verses_variable = i[u'chapter']
+        for m in all_chapter_verses_variable.keys():
+            verse = all_chapter_verses_variable[m]
+            chapter_value[m] = verse[u'verse']
+        sorted = []
+        for key in sorted(chapter_value, key=int):
+            chapter_sorted.append(chapter_value[key])
+        current_book_value[chapter_variable] = chapter_sorted
+
+    #print result_dict
+    #keys = result_dict.keys()
+    #keys.sort(compare_number_strings)
+
+    return result_dict
+"""
+
+def user_bible(query):
+    output = requests.get("http://getbible.net/json?passage={0}".format(query))
+    json_dict_output = json.loads(output.text.strip("();"))
+
+    return parse_rough_draft(json_dict_output)
 
 def parse_rough_draft(json_dict_output):
     books = json_dict_output[u'book']
@@ -18,7 +48,10 @@ def parse_rough_draft(json_dict_output):
         for m in all_chapter_verses_variable.keys():
             verse = all_chapter_verses_variable[m]
             chapter_value[m] = verse[u'verse']
-    #print result_dict
+        chapter_sorted = []
+        for key in sorted(chapter_value, key=int):
+            chapter_sorted.append((key, chapter_value[key]))
+        current_book_value[chapter_variable] = chapter_sorted
     return result_dict
 
 def compare_number_strings(string1, string2):
@@ -145,7 +178,16 @@ class Bible(flask.views.MethodView):
         print user_bible(result)
         flask.flash(user_bible(result))
         return flask.redirect(flask.url_for('Bible'))
-    
+"""
+    @app.context_processor
+    def cmp_cmp():
+        def cmp_python_func(string1a, string1b):
+            return (cmp_python_func=)
+"""
+"""
+def compare_number_strings(string1, string2):
+    return cmp(int(string1), int(string2))
+"""
 app.add_url_rule('/',
                  view_func=Main.as_view('index'),
                  methods=["GET", "POST"])

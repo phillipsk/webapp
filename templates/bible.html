@@ -21,13 +21,11 @@
                     {% for chapter in books[book]%}
                       <div class="chapter">
                       Chapter: {{chapter}}
-                    {% with sorted_keys = books[book][chapter].keys() %}
-                    
-                    
-                    {% for verse in sorted_keys %}
+                    {% with verses = books[book][chapter] %}
+                    {% for verse in verses %}
                         <div class="verse">
-                        Verse: {{verse}}
-                        <div class="verse-text">{{books[book][chapter][verse]}}</div>
+                        Verse: {{verse[0]}}
+                        <div class="verse-text">{{verse[1]}}</div>
                         </div>
                     {% endfor %}
                     {% endwith %}

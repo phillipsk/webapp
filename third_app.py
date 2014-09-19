@@ -28,14 +28,16 @@ def parse_rough_draft(json_dict_output):
     #keys.sort(compare_number_strings)
 
     return result_dict
-"""
+
 
 def user_bible(query):
     output = requests.get("http://getbible.net/json?passage={0}".format(query))
+    print "Hello"*4
+    print output.text
     json_dict_output = json.loads(output.text.strip("();"))
 
     return parse_rough_draft(json_dict_output)
-
+"""
 def parse_rough_draft(json_dict_output):
     books = json_dict_output[u'book']
     result_dict={}
@@ -62,6 +64,11 @@ def compare_number_strings(string1, string2):
 
 def user_bible(query):
     output = requests.get("http://getbible.net/json?passage={0}".format(query))
+    if output.text == "NULL":
+        return "no result"
+    
+    #print "Hello"*4
+    #print output.text
     json_dict_output = json.loads(output.text.strip("();"))
 
     before_for_loop_parse = json_dict_output[u'book'][0][u'chapter'] #[u'2'][u'verse']
@@ -176,8 +183,20 @@ class Bible(flask.views.MethodView):
     def post(self):
         result = (flask.request.form['expression'])
         print user_bible(result)
+        #print_statement =(flask.request.form['expression'])
+        #print print_statement
+        #flask.flash(print_statement)
         flask.flash(user_bible(result))
         return flask.redirect(flask.url_for('Bible'))
+
+class Echo(flask.views.MethodView):
+    #@login_required
+    def get(self):
+        return flask.render_template('bible.html', endpoint="Echo")
+    def post(self):
+        result = (flask.request.form['expression'])
+        flask.flash(result)
+        return flask.render_template("echo.html")
 """
     @app.context_processor
     def cmp_cmp():
@@ -199,6 +218,9 @@ app.add_url_rule('/music/',
                  methods=['GET'])
 app.add_url_rule('/Bible/',
                  view_func=Bible.as_view('Bible'),
+                 methods=['GET', 'POST'])
+app.add_url_rule('/Echo/',
+                 view_func=Echo.as_view('Echo'),
                  methods=['GET', 'POST'])
 
 if __name__ == "__main__":
